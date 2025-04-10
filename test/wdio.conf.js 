@@ -1,0 +1,31 @@
+exports.config = {
+    runner: 'local',
+    specs: [
+        './test/specs/**/*.js'
+    ],
+    maxInstances: 1,
+    capabilities: [{
+        // Android emülatör veya gerçek cihaz ayarları
+        platformName: 'Android',
+        deviceName: 'Pixel_3a_API_30',      // adb devices çıktısındaki cihaz adı
+        automationName: 'UiAutomator2',
+        app: '/full/path/to/your/app.apk',  // ya da test ettiğiniz .apk
+        newCommandTimeout: 240
+    }],
+    logLevel: 'info',
+    bail: 0,
+    baseUrl: '',
+    waitforTimeout: 10000,
+    connectionRetryTimeout: 90000,
+    connectionRetryCount: 3,
+    services: ['appium'],
+    appium: {
+        command: 'appium'
+    },
+    framework: 'mocha',
+    reporters: ['spec'],
+    mochaOpts: {
+        ui: 'bdd',
+        timeout: 60000
+    }
+};
