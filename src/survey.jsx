@@ -5,7 +5,13 @@ const SurveyScreen = () => {
   const [name, setName] = useState('');
   const [birthDate, setBirthDate] = useState('');
   const [city, setCity] = useState('');
+  const [educationLevel, setEducationLevel] = useState('');
+  const [gender, setGender] = useState('');
+  const [aiModelType, setAiModelType] = useState('');
+  const [prosCons, setProsCons] = useState('');
+  const [beneficialUseCase, setBeneficialUseCase] = useState('');
   const [selectedModels, setSelectedModels] = useState([]);
+
   const aiModels = ['ChatGPT', 'Bard', 'Claude', 'Copilot'];
 
   const toggleModelSelection = (model) => {
@@ -20,7 +26,7 @@ const SurveyScreen = () => {
   };
 
   const handleSubmit = () => {
-    if (!name || !birthDate || !city) {
+    if (!name || !birthDate || !city || !educationLevel || !gender || !aiModelType || !prosCons || !beneficialUseCase) {
       Alert.alert('Validation Error', 'Please fill in all fields.');
       return;
     }
@@ -35,7 +41,18 @@ const SurveyScreen = () => {
       return;
     }
 
-    const surveyData = { name, birthDate, city, selectedModels };
+    const surveyData = {
+      name,
+      birthDate,
+      city,
+      educationLevel,
+      gender,
+      aiModelType,
+      prosCons,
+      beneficialUseCase,
+      selectedModels
+    };
+
     console.log('Survey Submitted:', surveyData);
     Alert.alert('Success', 'Survey submitted successfully!');
   };
@@ -43,6 +60,7 @@ const SurveyScreen = () => {
   return (
     <View>
       <Text testID="Heading-Survey">Survey Artificial</Text>
+
       <TextInput
         testID="inputName-Survey"
         placeholder="Name"
@@ -61,6 +79,36 @@ const SurveyScreen = () => {
         value={city}
         onChangeText={setCity}
       />
+      <TextInput
+        testID="selectEducationLevel-Survey"
+        placeholder="Education Level"
+        value={educationLevel}
+        onChangeText={setEducationLevel}
+      />
+      <TextInput
+        testID="selectGender-Survey"
+        placeholder="Gender"
+        value={gender}
+        onChangeText={setGender}
+      />
+      <TextInput
+        testID="selectAIModelType-Survey"
+        placeholder="AI Model Type (e.g., NLP, CV)"
+        value={aiModelType}
+        onChangeText={setAiModelType}
+      />
+      <TextInput
+        testID="inputProsCons-Survey"
+        placeholder="Pros & Cons of AI Models"
+        value={prosCons}
+        onChangeText={setProsCons}
+      />
+      <TextInput
+        testID="inputBeneficialUseCase-Survey"
+        placeholder="Most Beneficial Use Case"
+        value={beneficialUseCase}
+        onChangeText={setBeneficialUseCase}
+      />
 
       <Text>Select AI Models Used:</Text>
       {aiModels.map(model => (
@@ -75,7 +123,7 @@ const SurveyScreen = () => {
       ))}
 
       <Button
-        testID="SubmitButton-Survey"
+        testID="buttonSubmit-Survey"
         title="Submit"
         onPress={handleSubmit}
       />
