@@ -30,4 +30,3 @@ class LoginPageModel {
 // calling it from login.spec.js via require.
 module.exports = new LoginPageModel();
 
-
