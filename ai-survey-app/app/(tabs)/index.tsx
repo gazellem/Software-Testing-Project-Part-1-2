@@ -19,14 +19,22 @@ const LoginScreen = () => {
 
   const router = useRouter();
   const navigation = useNavigation();
+  
   const handleLogin = () => {
     if ((!email && !phoneNumber) || !password) {
       Alert.alert('Validation Error', 'Please fill in all the fields.');
       return;
     }
 
+    if (email && phoneNumber) {
+      Alert.alert('Validation Error', 'Please enter either email or phone number, not both.');
+      return;
+    }
+
     // Simulate login logic: You should replace this with your backend API call.
-    const isLoginValid = (email === 'test@example.com' || phoneNumber === '123456789') && password === 'password123';
+    const isLoginValid = 
+      (email === 'test@example.com' && password === 'password123') || 
+      (phoneNumber === '123456789' && password === 'password123');
 
     if (isLoginValid) {
       // Navigate to Survey page if login is successful.

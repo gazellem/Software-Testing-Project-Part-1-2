@@ -23,6 +23,13 @@ const SurveyScreen: React.FC = () => {
   const [beneficialUseCase, setBeneficialUseCase] = useState('');
   const [selectedModels, setSelectedModels] = useState<string[]>([]);
   const [alreadySubmitted, setAlreadySubmitted] = useState(false);
+  const [touchedFields, setTouchedFields] = useState({
+    name: false,
+    birthDate: false,
+    city: false,
+    prosCons: false,
+    beneficialUseCase: false,
+  });
 
   const toggleModelSelection = (model: string) => {
     setSelectedModels((prev) =>
@@ -33,10 +40,10 @@ const SurveyScreen: React.FC = () => {
   };
 
   const isValidDate = (dateString: string): boolean =>
-    /^\d{4}-\d{2}-\d{2}$/.test(dateString);
+    /^(\d{4}[\/.]\d{2}[\/.]\d{2})$/.test(dateString);
 
   const isValidAge = (birthDate: string): boolean => {
-    const birth = new Date(birthDate);
+    const birth = new Date(birthDate.replace(/[\./]/g, '/')); // Normalize the date format
     const today = new Date();
     const age = today.getFullYear() - birth.getFullYear();
     const m = today.getMonth() - birth.getMonth();
@@ -114,9 +121,10 @@ const SurveyScreen: React.FC = () => {
         placeholder="Name"
         value={name}
         onChangeText={setName}
+        onFocus={() => setTouchedFields((prev) => ({ ...prev, name: true }))}
         style={styles.input}
       />
-      {name && !isValidName(name) && (
+      {touchedFields.name && name && !isValidName(name) && (
         <Text testID="errorNameInvalid" style={styles.error}>
           Name must only contain letters and spaces.
         </Text>
@@ -124,17 +132,18 @@ const SurveyScreen: React.FC = () => {
 
       <TextInput
         testID="inputBirthDate-Survey"
-        placeholder="Birth Date (YYYY-MM-DD)"
+        placeholder="Birth Date (YYYY/MM/DD or YYYY.MM.DD)"
         value={birthDate}
         onChangeText={setBirthDate}
+        onFocus={() => setTouchedFields((prev) => ({ ...prev, birthDate: true }))}
         style={styles.input}
       />
-      {birthDate.length > 0 && !isValidDate(birthDate) && (
+      {touchedFields.birthDate && birthDate.length > 0 && !isValidDate(birthDate) && (
         <Text testID="errorBirthDateInvalid" style={styles.error}>
           Invalid date format.
         </Text>
       )}
-      {isValidDate(birthDate) && !isValidAge(birthDate) && (
+      {touchedFields.birthDate && isValidDate(birthDate) && !isValidAge(birthDate) && (
         <Text testID="errorBirthDateAgeInvalid" style={styles.error}>
           You must be at least 18 years old.
         </Text>
@@ -145,9 +154,10 @@ const SurveyScreen: React.FC = () => {
         placeholder="City"
         value={city}
         onChangeText={setCity}
+        onFocus={() => setTouchedFields((prev) => ({ ...prev, city: true }))}
         style={styles.input}
       />
-      {city && !isValidCity(city) && (
+      {touchedFields.city && city && !isValidCity(city) && (
         <Text testID="errorCityInvalid" style={styles.error}>
           City must only contain letters and spaces.
         </Text>
@@ -182,10 +192,11 @@ const SurveyScreen: React.FC = () => {
         placeholder="Pros & Cons of AI Models"
         value={prosCons}
         onChangeText={setProsCons}
+        onFocus={() => setTouchedFields((prev) => ({ ...prev, prosCons: true }))}
         style={styles.input}
         multiline
       />
-      {!isValidTextLength(prosCons) && (
+      {touchedFields.prosCons && !isValidTextLength(prosCons) && (
         <Text testID="errorProsConsLength" style={styles.error}>
           Must be 10–250 characters.
         </Text>
@@ -196,10 +207,11 @@ const SurveyScreen: React.FC = () => {
         placeholder="Most Beneficial Use Case"
         value={beneficialUseCase}
         onChangeText={setBeneficialUseCase}
+        onFocus={() => setTouchedFields((prev) => ({ ...prev, beneficialUseCase: true }))}
         style={styles.input}
         multiline
       />
-      {!isValidTextLength(beneficialUseCase) && (
+      {touchedFields.beneficialUseCase && !isValidTextLength(beneficialUseCase) && (
         <Text testID="errorBeneficialUseCaseLength" style={styles.error}>
           Must be 10–250 characters.
         </Text>
@@ -318,7 +330,5 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
 });
-
-
 
 export default SurveyScreen;
