@@ -1,4 +1,6 @@
-import { describe, it, before, after, expect, $ } from '@wdio/globals';
+import { expect, $, driver } from '@wdio/globals';
+
+
 import LoginPage from '../pageObjects/LoginPage';
 import SurveyPage from '../pageObjects/SurveyPage';
 
