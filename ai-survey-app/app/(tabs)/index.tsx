@@ -19,14 +19,22 @@ const LoginScreen = () => {
 
   const router = useRouter();
   const navigation = useNavigation();
+  
   const handleLogin = () => {
     if ((!email && !phoneNumber) || !password) {
       Alert.alert('Validation Error', 'Please fill in all the fields.');
       return;
     }
 
+    if (email && phoneNumber) {
+      Alert.alert('Validation Error', 'Please enter either email or phone number, not both.');
+      return;
+    }
+
     // Simulate login logic: You should replace this with your backend API call.
-    const isLoginValid = (email === 'test@example.com' || phoneNumber === '123456789') && password === 'password123';
+    const isLoginValid = 
+      (email === 'test@example.com' && password === 'password123') || 
+      (phoneNumber === '123456789' && password === 'password123');
 
     if (isLoginValid) {
       // Navigate to Survey page if login is successful.
@@ -52,6 +60,8 @@ const LoginScreen = () => {
             keyboardType="email-address"
           />
         </View>
+
+        <Text style={styles.orText}>OR</Text>
 
         <View style={styles.inputGroup}>
           <Text style={styles.inputLabel}>Phone number</Text>
@@ -196,6 +206,13 @@ const styles = StyleSheet.create({
     borderColor: '#e2e8f0',
     backgroundColor: 'white',
   },
+
+  orText: {
+    fontSize: 16,
+    color: '#888',
+    marginVertical: 10,
+  },
+  
   googleButtonText: {
     fontSize: 14,
     color: '#4285F4',
