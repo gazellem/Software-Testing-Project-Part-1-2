@@ -1,16 +1,23 @@
 {
-  "extends": "expo/tsconfig.base",
   "compilerOptions": {
+    "target": "ES2022",
+    "module": "CommonJS",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
     "strict": true,
-    "types": ["@wdio/globals"],
+    "types": [
+      "node",
+      "@wdio/globals/types", // ✅ for $/expect/globals
+      "@wdio/sync",           // ✅ if using sync (optional)
+      "mocha"
+    ],
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./test/*"]
     }
   },
   "include": [
     "**/*.ts",
-    "**/*.tsx",
-    ".expo/types/**/*.ts",
-    "expo-env.d.ts"
+    "global.d.ts"
   ]
 }

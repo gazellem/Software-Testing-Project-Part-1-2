@@ -1,30 +1,30 @@
-// connection from module exports LoginPageModel. 
-// Importing exported class structure.
-import { describe, it, before, after, expect, $ } from '@wdio/globals';
-import LoginPage from '../pageObjects/LoginPage';
+import loginPage from '../pageObjects/LoginPage';
+import { browser, $, expect } from '@wdio/globals'; // Added explicit expect
 
-// Mocha Test Framework -- Test Case Structure 1
-// describe() defines the test group under Login Page Test Case(Scenario)
-// it() defines a test scenario.
-// re-use of submitLoginForm method.
+// Remove Mocha type declarations (they're already handled by @wdio/globals)
+// --------------------------------------------------
+
+// Add global Mocha type declarations
+declare const describe: (name: string, suite: () => void) => void;
+declare const it: (name: string, test: () => Promise<void>) => void;
+declare const before: (hook: () => Promise<void>) => void;
+declare const after: (hook: () => Promise<void>) => void;
+
 describe('Login Page Test Case', () => {
-    // Before each test, perform any setup actions
-    before(async () => {
-        // Launching the application
-        await driver.launchApp();
-    });
+  before(async () => {
+    await browser.launchApp();
+  });
 
-    it('should redirect user to survey screen after successful login', async () => {
-        await LoginPage.submitLoginForm('test123@yopmail.com', 'pass123');
+  it('should redirect to survey screen', async () => {
+    
+    await loginPage.submitLoginForm('test123@yopmail.com', 'pass123');
+    
+    const surveyHeader = await $('~Heading-Survey');
+    await surveyHeader.waitForDisplayed({ timeout: 15000 });
+    await expect(surveyHeader).toBeDisplayed();
+  });
 
-        // Verify survey page header is displayed
-        const surveyHeader = await $('~Heading-Survey');
-        await expect(surveyHeader).toBeDisplayed();
-    });
-
-    // After each test, for clarence perform clean-up actions
-    after(async () => {
-        // Ending the session method
-        await driver.closeApp();
-    });
+  after(async () => {
+    await browser.closeApp();
+  });
 });
