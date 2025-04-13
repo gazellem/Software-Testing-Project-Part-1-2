@@ -1,6 +1,7 @@
 // connection from module exports LoginPageModel. 
 // Importing exported class structure.
-const LoginPageModel = require('../pageObjects/LoginPageModel.page');
+import { describe, it, before, after, expect, $ } from '@wdio/globals';
+import LoginPage from '../pageObjects/LoginPage';
 
 // Mocha Test Framework -- Test Case Structure 1
 // describe() defines the test group under Login Page Test Case(Scenario)
@@ -14,7 +15,7 @@ describe('Login Page Test Case', () => {
     });
 
     it('should redirect user to survey screen after successful login', async () => {
-        await LoginPageModel.submitLoginForm('test123@yopmail.com', 'pass123');
+        await LoginPage.submitLoginForm('test123@yopmail.com', 'pass123');
 
         // Verify survey page header is displayed
         const surveyHeader = await $('~Heading-Survey');

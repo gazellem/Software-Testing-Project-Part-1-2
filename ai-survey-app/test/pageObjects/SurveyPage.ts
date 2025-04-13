@@ -1,32 +1,45 @@
-class SurveyPageModel {
+import { $ } from '@wdio/globals';
+
+type SurveyFormFields = {
+  name?: string;
+  birthDate?: string;
+  educationLevel?: string;
+  city?: string;
+  gender?: string;
+  aiModelType?: string;
+  prosCons?: string;
+  beneficialUseCase?: string;
+};
+
+class SurveyPage {
     //* Getting input fields name, birthDate, educationLevel, city, gender, AI model/type, prosCons, beneficialUseCase 
-    //  from login.jsx using getter */
+    //  from login.ts using getter */
     get inputName() {
-         return $('~inputName-Survey'); // inputName-Survey is testID from survey.jsx.
+         return $('~inputName-Survey'); // inputName-Survey is testID from survey.ts.
     }
     get inputBirthDate() {
-         return $('~inputBirthDate-Survey');    // inputBirthDate-Survey is testID from survey.jsx.
+         return $('~inputBirthDate-Survey');    // inputBirthDate-Survey is testID from survey.ts.
     }
     get selectEducationLevel() {
-        return $('~selectEducationLevel-Survey');    // selectEducationLevel-Survey is testID from survey.jsx.
+        return $('~selectEducationLevel-Survey');    // selectEducationLevel-Survey is testID from survey.ts.
     } 
     get inputCity() { 
-        return $('~inputCity-Survey');      // inputCity-Survey is testID from survey.jsx.
+        return $('~inputCity-Survey');      // inputCity-Survey is testID from survey.ts.
     }  
     get selectGender() {
-        return $('~selectGender-Survey');       // selectGender-Survey is testID from survey.jsx.
+        return $('~selectGender-Survey');       // selectGender-Survey is testID from survey.ts.
     } 
     get selectAIModelType() {
-         return $('~selectAIModelType-Survey');     // selectAIModelType-Survey is testID from survey.jsx.
+         return $('~selectAIModelType-Survey');     // selectAIModelType-Survey is testID from survey.ts.
     }    
     get inputProsCons() {
-        return $('~inputProsCons-Survey');     // inputProsCons-Survey is testID from survey.jsx.
+        return $('~inputProsCons-Survey');     // inputProsCons-Survey is testID from survey.ts.
     }
     get inputBeneficialUseCase() {
-        return $('~inputBeneficialUseCase-Survey');     // inputBeneficialUseCase-Survey is testID from survey.jsx.
+        return $('~inputBeneficialUseCase-Survey');     // inputBeneficialUseCase-Survey is testID from survey.ts.
     }
     get buttonSubmit() {
-         return $('~buttonSubmit-Survey');      // buttonSubmit-Survey is testID from survey.jsx.
+         return $('~buttonSubmit-Survey');      // buttonSubmit-Survey is testID from survey.ts.
     }    
 
     /**
@@ -41,7 +54,7 @@ class SurveyPageModel {
         aiModelType,
         prosCons,
         beneficialUseCase
-    }) {
+    }: SurveyFormFields): Promise<void> {
         if (name !== undefined) await this.inputName.setValue(name);
         if (birthDate !== undefined) await this.inputBirthDate.setValue(birthDate);
         if (educationLevel !== undefined) {
@@ -69,4 +82,5 @@ class SurveyPageModel {
     }
 }
 
-module.exports = new SurveyPageModel();
+
+export default new SurveyPage();
