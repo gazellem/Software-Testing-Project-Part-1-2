@@ -61,6 +61,8 @@ const LoginScreen = () => {
           />
         </View>
 
+        <Text style={styles.orText}>OR</Text>
+
         <View style={styles.inputGroup}>
           <Text style={styles.inputLabel}>Phone number</Text>
           <TextInput
@@ -204,6 +206,13 @@ const styles = StyleSheet.create({
     borderColor: '#e2e8f0',
     backgroundColor: 'white',
   },
+
+  orText: {
+    fontSize: 16,
+    color: '#888',
+    marginVertical: 10,
+  },
+  
   googleButtonText: {
     fontSize: 14,
     color: '#4285F4',
