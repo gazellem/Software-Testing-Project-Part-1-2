@@ -1,19 +1,22 @@
-class LoginPageModel {
+// necessary global definition for ts
+import { $ } from '@wdio/globals';  
+
+class LoginPage {
     //* Getting input fields email, password and login button 
-    //  from login.jsx using getter */
+    //  from login.ts using getter */
 
     get inputEmail()  {
-         return $('~inputEmail-Login'); // inputEmail-Login is testID from login.jsx.
+         return $('~inputEmail-Login'); // inputEmail-Login is testID from login.ts.
     }
     get inputPassword()  {
-         return $('~inputPassword-Login'); // inputPassword-Login is testID from login.jsx.
+         return $('~inputPassword-Login'); // inputPassword-Login is testID from login.ts.
     }
     get inputLoginButton()  {
-         return $('~inputLoginButton-Login'); // inputLoginButton-Login is testID from login.jsx.
+         return $('~inputLoginButton-Login'); // inputLoginButton-Login is testID from login.ts.
     }
 
     // this method is used to create re-usable standard to fill credentials
-    async submitLoginForm(inputEmail, inputPassword) {
+    async submitLoginForm(inputEmail: string, inputPassword: string): Promise<void> {
 
         // set email
         await this.inputEmail.setValue(inputEmail);
@@ -28,6 +31,6 @@ class LoginPageModel {
 // This helps us exporting this class out. 
 // Now, this LoginPage class is available for us
 // calling it from login.spec.js via require.
-module.exports = new LoginPageModel();
+export default new LoginPage();
 
 
